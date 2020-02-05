@@ -36,7 +36,7 @@ $import6 = Import-Csv $Path6
 foreach($SID in $import6)
 {
 $ID= $SID.("studentID")
-$OU= "OU=Re-Enabled Accounts,OU=sscsd.net,OU=sscsd_students,DC=Domain,DC=Domain,DC=org"
+$OU= "OU=Re-Enabled Accounts,OU=domain.net,OU=domain_students,DC=Domain,DC=Domain,DC=org"
 # Moves and Enables the accounts
 Get-ADUser -server "DomainName.org" -LDAPFilter "(studentID=$ID)" | Move-ADObject -targetpath "$OU" 
 Get-ADUser -server "DomainName.org" -LDAPFilter "(studentID=$ID)" | Enable-ADAccount
@@ -49,7 +49,7 @@ Write-Host "User $ID Enabled"
 
 #Add all User accounts to a CSV file containing their UPN.
 Get-ADUser -Filter * -server DomainName.org  -Properties userPrincipalName | Select userPrincipalName | Export-CSV "C:\Location\Location\ADaccounts.csv" 
-Get-ADUser -Filter * -server DomainName.org -SearchBase "OU=sscsd.net,OU=sscsd_students,DC=Domain,DC=Domain,DC=org" -Properties studentID | Select studentID | Export-CSV "C:\Location\Location\studentID.csv"
+Get-ADUser -Filter * -server DomainName.org -SearchBase "OU=domain.net,OU=domain_students,DC=Domain,DC=Domain,DC=org" -Properties studentID | Select studentID | Export-CSV "C:\Location\Location\studentID.csv"
 
 #Compares SchoolTool export with AD export and adds new users to NewAccounts csv
 
